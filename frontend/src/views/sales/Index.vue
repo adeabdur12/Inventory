@@ -35,7 +35,7 @@
         </div>
         <div class="col-sm p-3 min-vh-100">
             <div class="container-fluid">
-                <h4>Data Semua Item</h4>
+                <h4>Sales</h4>
                 <!-- <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Tambah Data
                 </button> -->
@@ -48,23 +48,25 @@
                 <thead>
                     <tr>
                     <th scope="col">No</th>
-                    <th scope="col">Nama Item</th>
-                    <th scope="col">Unit</th>
-                    <th scope="col">Stok</th>
-                    <th scope="col">Harga Satuan</th>
-                    <th scope="col">Barang</th>
-                    <th scope="col">Opsi</th>
+                    <th scope="col">Kode Transaksi</th>
+                    <th scope="col">Tanggal Transaksi</th>
+                    <th scope="col">item</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Total Diskon</th>
+                    <th scope="col">Total Harga</th>
+                    <th scope="col">Total Bayar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>sdf</td>
-                        <td>sdf</td>
-                        <td>sdf</td>
-                        <td>sdf</td>
-                        <td>sdf</td>
-                        <td>sdf</td>
-                    
+                        <td>1</td>
+                        <td>1214</td>
+                        <td>15 juli 2023</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>20</td>
+                        <td>30000</td>
+                        <td>30000</td>
                     <td>
                         <router-link
                         :to="{ name : 'item.edit',params:{id: 1} }"

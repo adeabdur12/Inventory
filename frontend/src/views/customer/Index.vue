@@ -20,7 +20,7 @@
                          <router-link
                         :to="{ name : 'customer.index' }"
                         class="nav-link py-3 px-2"
-                        title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="People"><i class="bi-people fs-1"></i>
+                        title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home"><i class="bi-people fs-1"></i>
                         </router-link>
                     </li>
                     <li>
@@ -57,16 +57,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(items, index ) in item.data" :key="index">
-                    <th scope="row">1</th>
-                    <td>{{ items.nama_item}}</td>
-                    <td>{{ items.unit }}</td>
-                    <td>{{ items.stok}}</td>
-                    <td>{{ items.harga_satuan}}</td>
-                    <td id="main">
-                        <img :src="path + items.barang"  alt="" class="img-fluid" width="100">
-                        
-                    </td>
+                    <tr>
+                        <td>sdf</td>
+                        <td>sdf</td>
+                        <td>sdf</td>
+                        <td>sdf</td>
+                        <td>sdf</td>
+                        <td>sdf</td>
+                    
                     <td>
                         <router-link
                         :to="{ name : 'item.edit',params:{id: 1} }"
@@ -85,28 +83,10 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { onMounted, ref } from 'vue'
 
 export default {
-    
-   setup() {
-       let item = ref([]);
-       var path = "http://localhost:8000/storage/";
-       onMounted(() => {
-           // get data item
-           axios.get('http://localhost:8000/api/item')
-           .then((result) => {
-               item.value = result.data
-           }).catch((err) => {
-               console.log(err.response.message)
-           });
-       });
-
-       return {
-           item,
-           path
-       }
-   }
+    setup() {
+        
+    }
 }
 </script>

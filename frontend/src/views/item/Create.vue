@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-group">
                         <label for="nama_item">Barang</label>
-                        <input accept=".jpg,.jpeg,.png" type="file" class="form-control" ref="file" @change="onFileSelected">
+                        <input  type="text" class="form-control" v-model="item.barang">
                         <p class="text-danger small mb-0"></p>
                     </div>
                     <div class="form-group mt-3">
@@ -61,16 +61,7 @@ import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 export default {
-    data(){
-        return {
-            selectedFile : ""
-        }
-    },
-    methods: {
-            onFileSelected(event){
-                this.selectedFile = event.target.files[0]
-            }
-    },setup(){
+    setup(){
          
         const item = reactive({
             'nama_item' :'',
@@ -84,11 +75,11 @@ export default {
     const router = useRouter();
 
         function store(){
-            const formData = new FormData();
-            formData.append('barang',this.selectedFile , this.selectedFile.name)
+            // const formData = new FormData();
+            // formData.append('barang',this.selectedFile , this.selectedFile.name)
             axios.post(
                 'http://localhost:8000/api/item',
-                formData
+                item
             )
             .then(() => {
                 router.push({

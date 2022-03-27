@@ -36,9 +36,6 @@
         <div class="col-sm p-3 min-vh-100">
             <div class="container-fluid">
                 <h4>Sales</h4>
-                <!-- <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Tambah Data
-                </button> -->
                 <router-link
                 :to="{ name : 'item.create' }"
                 class="btn btn-sm btn-primary m-1 rounded">Tambah Data</router-link>
@@ -58,18 +55,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr v-for="(sale, index) in sales.data" :key="index">
                         <td>1</td>
-                        <td>1214</td>
-                        <td>15 juli 2023</td>
-                        <td>1</td>
-                        <td>3</td>
-                        <td>20</td>
-                        <td>30000</td>
-                        <td>30000</td>
+                        <td>{{ sale.kode_transaksi }}</td>
+                        <td>{{ sale.tanggal_transaksi }}</td>
+                        <td>{{ sale.item }}</td>
+                        <td>{{ sale.total_diskon }}</td>
+                        <td>{{ sale.total_harga }}</td>
+                        <td>{{ sale.total_bayar }}</td>
                     <td>
                         <router-link
-                        :to="{ name : 'item.edit',params:{id: 1} }"
+                        :to="{ name : 'item.edit',params:{id: sale.id} }"
                         class="btn btn-sm btn-primary m-1 rounded shadow"><i class="bi-pencil"></i></router-link>
                         <button class="btn btn-sm btn-danger shadow"><i class="bi-trash"></i></button>
                     </td>
@@ -85,10 +81,27 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { onMounted, ref } from 'vue'
 
 export default {
     setup() {
+        let sales = ref([]);
+        var path = "http://localhost:8000/storage";
+        // get data sales
+        onMounted(() => {
+            axios.get('http://localhost:8000/api/sales')
+            .then((result) => {
+                sales.value = result.data
+            }).catch((err)=> {
+                console.log(err.response.message)
+            });
+        });
         
+        return {
+                sales,
+                path
+            }
     }
 }
 </script>

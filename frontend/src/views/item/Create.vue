@@ -14,15 +14,15 @@
             <h4>Input Item</h4>
         </div>
         <div class="card-body">
-            <form @submit.prevent="store()" enctype="multipart/form-data">
+            <form enctype="multipart/form-data">
                 <div class="form-group">
                         <label for="nama_item">Nama Item</label>
-                        <input type="text" class="form-control" v-model="item.nama_item">
+                        <input type="text" name="nama_item" class="form-control" >
                         <p class="text-danger small mb-0"></p>
                     </div>
                     <div class="form-group">
                         <label for="nama_item">Unit</label>
-                        <select class="form-select" v-model="item.unit">
+                        <select class="form-select" name="unit">
                             <option value="">-pilih-</option>
                             <option value="kg">kg</option>
                             <option value="pcs">pcs</option>
@@ -31,21 +31,21 @@
                     </div>
                     <div class="form-group">
                         <label for="nama_item">Stok</label>
-                        <input type="number"  class="form-control" v-model="item.stok">
+                        <input type="number"  class="form-control" name="stok">
                         <p class="text-danger small mb-0"></p>
                     </div>
                     <div class="form-group">
                         <label for="nama_item">Harga Satuan</label>
-                        <input type="text" class="form-control" v-model="item.harga_satuan">
+                        <input type="text" class="form-control" name="harga_satuan">
                         <p class="text-danger small mb-0"></p>
                     </div>
                     <div class="form-group">
                         <label for="nama_item">Barang</label>
-                        <input  type="text" class="form-control" v-model="item.barang">
+                        <input type="file" ref="barang" class="form-control" @change="selectFile">
                         <p class="text-danger small mb-0"></p>
                     </div>
                     <div class="form-group mt-3">
-                        <button class="btn btn-primary btn-sm">Submit</button>
+                        <button class="btn btn-primary btn-sm" @click="sendForm">Submit</button>
                     </div>
             </form>
         </div>
@@ -56,47 +56,29 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import axios from 'axios'
-
 export default {
-    setup(){
-         
-        const item = reactive({
-            'nama_item' :'',
-            'unit' : '',
-            'stok' : '',
-            'harga_satuan' : '',
-            'barang' : ''
-        });
-
-    const validation = ref([]);
-    const router = useRouter();
-
-        function store(){
-            // const formData = new FormData();
-            // formData.append('barang',this.selectedFile , this.selectedFile.name)
-            axios.post(
-                'http://localhost:8000/api/item',
-                item
-            )
-            .then(() => {
-                router.push({
-                    name : item.index
-                })
-            }).catch((err) => {
-                validation.value = err.response.data
-            });
-        }
-
-        return  {
-            item,
-            validation,
-            router,
-            store
-        }
-    }
+ name : 'Create Item',
+ data(){
+     return {
+         item : {
+             nama_item : '',
+             unit : '',
+             stok : '',
+             harga_satuan : '',
+             barang : ''
+         }
+     }
+ },
+ methods: {
+     selectFile(){
+         this.barang = this.$refs.barang.files[0]
+     },sendFile(){
+         const fd = new FormData();
+         fd.append('barang', this.file);
+         axios.post('http://localhost:8000/api/item',{file:this.file})
+     }
+ }
         
 }
 </script>

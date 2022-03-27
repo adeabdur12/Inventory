@@ -36,9 +36,6 @@
         <div class="col-sm p-3 min-vh-100">
             <div class="container-fluid">
                 <h4>Data Semua Item</h4>
-                <!-- <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Tambah Data
-                </button> -->
                 <router-link
                 :to="{ name : 'item.create' }"
                 class="btn btn-sm btn-primary m-1 rounded">Tambah Data</router-link>
@@ -65,7 +62,6 @@
                     <td>{{ items.harga_satuan}}</td>
                     <td id="main">
                         <img :src="path + items.barang"  alt="" class="img-fluid" width="100">
-                        
                     </td>
                     <td>
                         <router-link
@@ -76,8 +72,7 @@
                     </tr>
                 </tbody>
                 </table>
-    </div>
-    
+            </div>
             </div>
         </div>
     </div>

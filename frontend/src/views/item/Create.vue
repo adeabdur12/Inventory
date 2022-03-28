@@ -14,15 +14,15 @@
             <h4>Input Item</h4>
         </div>
         <div class="card-body">
-            <form enctype="multipart/form-data">
+            <form @submit.prevent="store()" enctype="multipart/form-data">
                 <div class="form-group">
                         <label for="nama_item">Nama Item</label>
-                        <input type="text" name="nama_item" class="form-control" >
+                        <input type="text" v-model="item.nama_item" class="form-control" >
                         <p class="text-danger small mb-0"></p>
                     </div>
                     <div class="form-group">
                         <label for="nama_item">Unit</label>
-                        <select class="form-select" name="unit">
+                        <select class="form-select" v-model="item.unit">
                             <option value="">-pilih-</option>
                             <option value="kg">kg</option>
                             <option value="pcs">pcs</option>
@@ -31,21 +31,21 @@
                     </div>
                     <div class="form-group">
                         <label for="nama_item">Stok</label>
-                        <input type="number"  class="form-control" name="stok">
+                        <input type="number"  class="form-control" v-model="item.stok">
                         <p class="text-danger small mb-0"></p>
                     </div>
                     <div class="form-group">
                         <label for="nama_item">Harga Satuan</label>
-                        <input type="text" class="form-control" name="harga_satuan">
+                        <input type="text" class="form-control" v-model="item.harga_satuan">
                         <p class="text-danger small mb-0"></p>
                     </div>
                     <div class="form-group">
                         <label for="nama_item">Barang</label>
-                        <input type="file" ref="barang" class="form-control" @change="selectFile">
+                        <input type="file" accept=".jpg,.jpeg,.png" ref="barang" class="form-control" @change="onFileChange">
                         <p class="text-danger small mb-0"></p>
                     </div>
                     <div class="form-group mt-3">
-                        <button class="btn btn-primary btn-sm" @click="sendForm">Submit</button>
+                        <button class="btn btn-primary btn-sm">Submit</button>
                     </div>
             </form>
         </div>
@@ -56,29 +56,53 @@
 </template>
 
 <script>
+import { reactive, ref } from 'vue'
 import axios from 'axios'
-export default {
- name : 'Create Item',
- data(){
-     return {
-         item : {
-             nama_item : '',
-             unit : '',
-             stok : '',
-             harga_satuan : '',
-             barang : ''
-         }
-     }
- },
- methods: {
-     selectFile(){
-         this.barang = this.$refs.barang.files[0]
-     },sendFile(){
-         const fd = new FormData();
-         fd.append('barang', this.file);
-         axios.post('http://localhost:8000/api/item',{file:this.file})
-     }
- }
-        
-}
+import { useRouter } from 'vue-router'
+    
+    export default {
+        setup(){
+            const item = reactive({
+                nama_item : '',
+                unit : '',
+                stok : '',
+                harga_satuan :'',
+                barang : ''
+            });
+
+            const validation = ref([]);
+            const router = useRouter();
+
+            function store(){
+                let fd = new FormData();
+                fd.append('nama_item', this.item.nama_item);
+                fd.append('unit', this.item.unit);
+                fd.append('stok', this.item.stok);
+                fd.append('harga_satuan', this.item.harga_satuan);
+                fd.append('barang', this.item.barang);
+
+                axios.post('http://localhost:8000/api/item', fd)
+                .then((result) => {
+                    router.push({
+                        name : 'item.index'
+                    })
+                }).catch((err) => {
+                    validation.value = err.response.message
+                })
+            }
+
+            return {
+                item,
+                validation,
+                router,
+                store
+            }
+        },
+        methods : {
+            onFileChange(event){
+                this.item.barang = event.target.files[0];
+            }
+        }
+    }
+
 </script>

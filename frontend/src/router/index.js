@@ -3,8 +3,24 @@ import { createRouter, createWebHistory } from 'vue-router';
 const routes = [
     {
         path : '/',
+        name : 'home',
+        component : () => import("../views/home/Home.vue")
+
+    },
+    {
+        path : '/dashboard',
         name : 'item.index',
         component : () => import("../views/item/Index.vue")
+    },
+    {
+        path : '/login',
+        name : 'auth.login',
+        component : () => import("../views/auth/Login.vue")
+    },
+    {
+        path : '/register',
+        name : 'auth.register',
+        component : () => import("../views/auth/Register.vue")
     },
     {
         path : '/create_item',
@@ -14,7 +30,7 @@ const routes = [
     {
         path : '/edit/:id',
         name : 'item.edit',
-        component : () => import("../views/item/Edit.vue")
+        component : () => import("../views/item/EditItem.vue")
     },
     {
         path : '/customer',

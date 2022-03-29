@@ -1,6 +1,16 @@
+<script >
+
+export default {
+    name :'Home',
+    setup() {
+    }
+}
+</script>
+
+
 <template>
     <div>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold" href="#">Produk</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,14 +33,9 @@
     </div>
   </div>
 </nav>
-   </div>
+
+    <div class="container">
+        <p>sdfkyg</p>
+    </div>
+    </div>
 </template>
-
-
-<script>
-
-export default {
-
-
-}
-</script>

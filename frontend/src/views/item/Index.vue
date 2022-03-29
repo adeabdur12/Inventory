@@ -44,7 +44,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                    <th scope="col">No</th>
                     <th scope="col">Nama Item</th>
                     <th scope="col">Unit</th>
                     <th scope="col">Stok</th>
@@ -55,7 +54,6 @@
                 </thead>
                 <tbody>
                     <tr v-for="(items, index ) in item.data" :key="index">
-                    <th scope="row">1</th>
                     <td>{{ items.nama_item}}</td>
                     <td>{{ items.unit }}</td>
                     <td>{{ items.stok}}</td>
@@ -65,9 +63,9 @@
                     </td>
                     <td>
                         <router-link
-                        :to="{ name : 'item.edit',params:{id: 1} }"
+                        :to="{ name : 'item.edit',params:{id: items.id} }"
                         class="btn btn-sm btn-primary m-1 rounded shadow"><i class="bi-pencil"></i></router-link>
-                        <button class="btn btn-sm btn-danger shadow"><i class="bi-trash"></i></button>
+                        <button class="btn btn-sm btn-danger shadow" @click="destroy(items.id, index)"><i class="bi-trash"></i></button>
                     </td>
                     </tr>
                 </tbody>
@@ -98,9 +96,18 @@ export default {
            });
        });
 
+      function destroy(id, index){
+          axios.delete(`http://localhost:8000/api/item/${id}`)
+           .then(() => {
+               item.value.data.splice(index, 1)
+           }).catch((err) => {
+               console.log(err.response.data)
+           });
+      }
        return {
            item,
-           path
+           path,
+           destroy
        }
    }
 }

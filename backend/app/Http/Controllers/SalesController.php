@@ -30,17 +30,7 @@ class SalesController extends Controller
    
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
-            'nama' => 'required',
-            'contact' => 'required',
-            'email' => 'required|email:dns',
-            'tipe_diskon' => 'required|in:persentase,fix',
-            'ktp' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        
 
         try {
             $sales = Sales::create($request->all());

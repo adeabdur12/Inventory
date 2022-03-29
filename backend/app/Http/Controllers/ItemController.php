@@ -28,16 +28,17 @@ class ItemController extends Controller
 
     
     public function store(Request $request)
-    {
+    {   
         $validator = $request->validate([
             'nama_item' => 'required',
             'unit' => 'required|in:kg,pcs',
-            'stok' => 'required|numeric',
+            'stok' => 'required|numeric|min:1',
             'harga_satuan' => 'required|numeric',
             'barang' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         
-        if($validator == FALSE){
+        if($validator){
+        }else{
             return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
@@ -80,20 +81,20 @@ class ItemController extends Controller
     public function update(Request $request, $id)
     {
         $item = Item::findOrFail($id);
-        $validator = Validator::make($request->all(),[
+        $validator = $request->validate([
             'nama_item' => 'required',
             'unit' => 'required|in:kg,pcs',
             'stok' => 'required|numeric',
-            'harga_satuan' => 'required|numeric',
-            'barang' => 'required',
+            'harga_satuan' => 'required|numeric'
         ]);
 
-        if($validator->fails()){
+        if($validator){
+        }else{
             return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         try {
-            $item->update($request->all());
+            $item->update($validator);
             $response = [
                 'message' => 'Item berhasil di ubah',
                 'data' => $item
@@ -103,6 +104,30 @@ class ItemController extends Controller
         } catch (QueryException $e) {
             return response()->json([
                 'message' => 'Data gagal di ubah'.$e->errorInfo
+            ]);
+        }
+    }
+
+    public function updateImg(Request $request, $id){
+        $item = Item::findOrFail($id);
+        $validator = $request->validate([
+             'barang' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+        
+        if($validator){
+        }else{
+            return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        try {
+            $validator['barang'] = $request->file('barang')->store('barang');
+            $item->update($validator);
+            $response = [
+                'message' => 'Berhasil',
+                'data' => $item
+            ];
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Gagal'.$e->errorIfo
             ]);
         }
     }

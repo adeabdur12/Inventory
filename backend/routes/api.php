@@ -25,6 +25,7 @@ Route::get('/item/{id}',[ItemController::class,'show']);
 Route::delete('/item/{id}',[ItemController::class,'destroy']);
 Route::post('/item',[ItemController::class,'store']);
 Route::put('/item/{id}',[ItemController::class,'update']);
+Route::put('/item_img/{id}',[ItemController::class,'updateImg']);
 
 Route::get('/customer',[CustomerController::class,'index']);
 Route::get('/customer/{id}',[CustomerController::class,'show']);

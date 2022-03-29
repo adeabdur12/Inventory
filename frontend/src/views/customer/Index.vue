@@ -36,10 +36,10 @@
         <div class="col-sm p-3 min-vh-100">
             <div class="container-fluid">
                 <h4>Customer</h4>
-                <router-link
-                :to="{ name : 'item.create' }"
-                class="btn btn-sm btn-primary m-1 rounded">Tambah Data</router-link>
                 <hr>
+                <router-link
+                :to="{ name : 'customer.create' }"
+                class="btn btn-sm btn-primary m-1 rounded">Tambah Data</router-link>
             <div class="table-responsive">
             <table class="table">
                 <thead>

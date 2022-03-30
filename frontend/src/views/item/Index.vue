@@ -1,7 +1,7 @@
 <template>
 <div class="container-fluid">
     <nav class="navbar navbar-light bg-light d-none d-lg-block d-xl-block">
-        <a class="navbar-brand d-flex" href="#">
+        <a class="navbar-brand d-flex" href="/">
         <img src="../../assets/logo.png" alt="" class="mt-2" width="30" height="24">
         <h3 class="ms-3">Inventory</h3>
         </a>
@@ -44,6 +44,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                    <th scope="col">No</th>
                     <th scope="col">Nama Item</th>
                     <th scope="col">Unit</th>
                     <th scope="col">Stok</th>
@@ -54,6 +55,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(items, index ) in item.data" :key="index">
+                    <td>{{ no++ }}</td>
                     <td>{{ items.nama_item}}</td>
                     <td>{{ items.unit }}</td>
                     <td>{{ items.stok}}</td>
@@ -85,6 +87,7 @@ export default {
     
    setup() {
        let item = ref([]);
+       var no =1;
        var path = "http://localhost:8000/storage/";
        onMounted(() => {
            // get data item
@@ -107,6 +110,7 @@ export default {
        return {
            item,
            path,
+           no,
            destroy
        }
    }

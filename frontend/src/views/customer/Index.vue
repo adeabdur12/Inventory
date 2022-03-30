@@ -56,7 +56,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(customers, index) in customer.data" :key="index">
-                        <td>1</td>
+                        <td>{{ no++ }}</td>
                         <td>{{ customers.nama}}</td>
                         <td>{{ customers.contact}}</td>
                         <td>{{ customers.email}}</td>
@@ -89,6 +89,7 @@ export default {
     setup() {
         let customer = ref([]);
         var path = "http://localhost:8000/storage";
+        var no = 1;
         // get data customer
         onMounted(() => {
             axios.get('http://localhost:8000/api/customer')
@@ -101,7 +102,8 @@ export default {
 
         return {
                 customer,
-                path
+                path,
+                no
             }
     }
 }

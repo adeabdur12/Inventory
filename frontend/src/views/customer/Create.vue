@@ -98,7 +98,6 @@ import axios from 'axios'
             });
 
             let validation = ref([]);
-            
             const router = useRouter();
 
             function store(){
